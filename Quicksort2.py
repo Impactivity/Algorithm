@@ -35,6 +35,7 @@ def quicksort(x, low, high):
     quicksort(x,low,divide-1)
     quicksort(x,divide+1, high)
 
+
 def part(x, pivot, high):
     i = pivot + 1
     j = high
