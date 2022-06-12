@@ -30,6 +30,7 @@ mygraph = {
 parent = dict()
 rank = dict()
 
+# 노드 parent 초기화
 def make_set(node):
     parent[node] = node
     rank[node] = 0
