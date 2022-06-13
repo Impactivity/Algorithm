@@ -45,7 +45,7 @@ class NodeMgmt:
                 self.current_node = self.current_node.right
             else:
                 self.current_node = self.current_node.left
-        return False
+        return None
 
     def delete(self,value):
         self.current_node = self.search(value)
@@ -84,6 +84,36 @@ class NodeMgmt:
             # 3-1 삭제하려는 노드의 오른쪽 노드의 child중 가장 왼쪽(가장 작은 값)에 있는 노드가 올라옴
             # 3-2 올라온 노드의 왼쪽 오른쪽은 삭제할 노드의 왼쪽, 오른쪽 자식을 가리키게 된다.
             # 3-3 만일 올라온 노드가 원래 오른쪽 자식을 가지고 있는 경우에는 올라온 노드의 오른쪽 자식이된다 ?
+            else:
+                print('여기 ')
+                self.change_node = self.current_node.right
+
+                while True:
+                    if self.change_node.left != None:
+                        self.change_node = self.change_node.left
+                    else:
+                        break
+
+                print(f'현재 삭제하려는 노드 : {self.current_node.value}, 삭제하려는 노드의 parent : {self.current_node.parent.value} , 삭제노드를 대체할 노드 : {self.change_node.value}' )
+
+                # 부모노드를 바꿔주고 부보노드에서 가리키는 자식노드도 바꿔준다.
+                self.change_node.parent = self.current_node.parent
+                if self.current_node.parent.right == self.current_node:
+                    self.current_node.parent.right = self.change_node
+                else:
+                    self.current_node.parent.left = self.change_node
+
+                # 대체할 노드가 Leaf 노드라면 바로 교체
+                if self.change_node.right == None:
+                    self.current_node = self.change_node
+                    self.change_node.right = None
+
+                else:
+                    print('대체할 노드의 자식이 존재')
+                    self.current_node = self.change_node
+                    self.current_node.right.left = self.change_node.right
+
+                print(f'현재 대체된  노드 : {self.current_node.value} , 대체된 노드의 parent: {self.current_node.parent.right.value}')
 
             return
 
@@ -91,20 +121,20 @@ class NodeMgmt:
             return False
 
 
-            self.current_node = self.head
 
 
 
 
-
-
-
-head = Node(1)
+head = Node(4)
 BST = NodeMgmt(head)
 
 BST.insert(2)
-BST.insert(4)
-BST.insert(5)
 BST.insert(6)
-print(BST.search(6).parent.value)
+BST.insert(5)
+BST.insert(7)
+BST.insert(8)
+BST.insert(5.5)
+BST.delete(6)
+print(BST.search(4).right.value , BST.search(4).right.right.value)
+
 
