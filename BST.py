@@ -1,3 +1,5 @@
+import random
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -122,19 +124,32 @@ class NodeMgmt:
 
 
 
+bst_nums = set()
+while len(bst_nums) != 100: # 0부터 999까지 랜덤하게 100개 입력
+    bst_nums.add(random.randint(0,999))
+
+# 선택된 100개의 숫자를 이진 탐색트리에 삽입, 임의로 루트는 500으로 정한다.
+
+print(bst_nums)
+
+head = Node(100)
+
+binary_search = NodeMgmt(head)
+for i in bst_nums:
+    binary_search.insert(i)
+
+for num in bst_nums:
+    if binary_search.search(num) == None:
+        print('search failed')
 
 
+# 100개의 숫자중 10개의 숫자를 랜덤 선택
+delete_nums = set()
+bst_nums = list(bst_nums)
+while len(delete_nums) != 10:
+    delete_nums.add(bst_nums[random.randint(0,99)])
 
-head = Node(4)
-BST = NodeMgmt(head)
-
-BST.insert(2)
-BST.insert(6)
-BST.insert(5)
-BST.insert(7)
-BST.insert(8)
-BST.insert(5.5)
-BST.delete(6)
-print(BST.search(4).right.value , BST.search(4).right.right.value)
-
-
+print(delete_nums)
+for del_num in delete_nums:
+    if binary_search.delete(del_num) == False:
+        print('delete faided', del_num)
